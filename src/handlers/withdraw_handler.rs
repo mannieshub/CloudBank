@@ -4,3 +4,6 @@ use actix_web::{get,Responder,HttpResponse};
 async fn withdraw_money() -> impl Responder{
     HttpResponse::Ok().json("Withdraw Service")
 }
+
+//ผู้ใช้ใส่ id และจำนวนเงินที่ต้องการถอน
+//update เงินในบัญชีของผู้ใช้ (-)
