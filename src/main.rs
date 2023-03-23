@@ -1,6 +1,7 @@
 use actix_web::{App ,HttpServer};
 pub mod routes;
 pub mod handlers;
+mod models;
 use crate::routes::{account_routes,deposit_routes,withdraw_routes,transfer_routes};
 
 #[actix_web::main]

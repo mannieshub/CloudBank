@@ -24,12 +24,6 @@ pub struct Transaction {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct AccountDetail {
-    pub message: String,
-    pub data: Data,
-}
-
-#[derive(Serialize, Deserialize)]
 pub struct DataAccount {
     pub account_id: i32,
     pub account_name: String,
