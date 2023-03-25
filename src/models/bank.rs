@@ -10,7 +10,7 @@ pub struct LoginSystem {
 pub struct RegisterSystem {
     pub username: String,
     pub password: String,
-    pub savingplan: String,
+    pub saving_plan: String,
     pub amount: i32,
 }
 
