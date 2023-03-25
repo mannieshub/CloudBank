@@ -83,6 +83,7 @@ pub struct DataTransfer {
 
 #[derive(Serialize,Deserialize)]
 pub struct TransferMoney {
+    
     pub message: String,
     pub data: Vec<DataTransfer>,
     

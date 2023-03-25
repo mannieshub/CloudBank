@@ -1,11 +1,53 @@
-use actix_web::{get,Responder,HttpResponse};
+use crate::models::bank::{TransferMoney,DataTransfer};
+use actix_web::{post,web,HttpResponse,Responder};
 
-#[get("/transfer")]
-async fn transfer_money() -> impl Responder{
-    HttpResponse::Ok().json("Transfer Service")
+use serde::{Serialize,Deserialize};
+use serde_json::json;
+
+#[derive(Serialize,Deserialize)]
+pub struct Headers {
+    pub destination_id: i32,
+    pub amount: i32,
 }
 
-//ผู้ใช้กรอก id ตัวเองและ id ที่ต้องการโอน
-//กรอกจำนวนเงินที่ต้องการโอน
-//ทำการ update เงินของผู้ส่งและผู้รับ ผู้ส่ง(-) ผู้รับ(+)
-//id ทั้ง 2 ต้องมีใน db หรือในไฟล์นี้หรือแสดงโง่ๆก็ได้
+#[post("/transfer/{id}")]
+async fn transfer_money(account_id:web::Path<i32>,transfer:web::Json<Headers>) -> impl Responder {
+    let inner: Headers = transfer.into_inner();
+    let id: i32 = account_id.to_string().parse().unwrap();
+
+    let d_id:i32 = inner.destination_id;
+
+    let amt: i32 = inner.amount;
+
+    if amt <= 0 {
+        return HttpResponse::BadRequest().json(json!({
+            "message": "Invalid amount",
+            "data": null
+        }));
+    }
+
+    if id == 1212312121 {
+        
+        let transfer: DataTransfer = DataTransfer { 
+            message: ("Transfer Success!").to_string(), 
+            account_id: (id), 
+            account_name: ("Man").to_string(), 
+            to_id: (d_id), 
+            to_name: ("TewNaja").to_string(), 
+            available_balance: 1_000_000_000 -  amt, 
+            time: ("2023-03-16T15:00:00Z").to_string(),
+        };
+
+        let transfer_money: TransferMoney = TransferMoney { 
+            message: ("Transfer Success!").to_string(), 
+            data: vec![transfer],
+         };
+         HttpResponse::Ok().json(transfer_money)
+        } else {
+            HttpResponse::NotFound().json(json!({
+                "message": "The request was invalid",
+                "data": null
+            }))
+    }
+
+}
