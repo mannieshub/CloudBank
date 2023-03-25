@@ -5,14 +5,13 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 #[derive(Serialize, Deserialize)]
 struct Headers {
-    account_id: i32,
     amount: i32,
 }
-#[post("/deposit")]
-async fn deposit_money(deposit: web::Json<Headers>) -> impl Responder {
+#[post("/deposit/{id}")]
+async fn deposit_money(account_id: web::Path<i32>,deposit: web::Json<Headers>) -> impl Responder {
     //HttpResponse::Ok().json("Deposit Service")
     let inner = deposit.into_inner();
-    let id = inner.account_id;
+    let id = account_id.to_string().parse().unwrap();
     let amt = inner.amount;
     if amt <= 0 {
         return HttpResponse::BadRequest().json(json!({
