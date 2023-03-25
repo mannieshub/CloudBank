@@ -1,24 +1,19 @@
 use actix_web::{get,web,Responder,HttpResponse};
-use log::{info, debug};
+//use log::{info, debug};
 use serde_json::json;
 use crate::models::bank::{AccountDetail,DataAccount,Transaction};
-use serde::{Serialize, Deserialize};
+//use serde::{Serialize, Deserialize};
 
-#[derive(Serialize, Deserialize)]
-struct Headers {
-    account_id: i32,
-    password: String,
-}
 
-#[get("/account")]
-async fn account_id(account_id: web::Json<Headers>) -> impl Responder{
+#[get("/account/{id}")]
+async fn account_id(account_id: web::Path<i32>) -> impl Responder{
     //HttpResponse::Ok().json("Account")
-    info!("Test");
-    debug!("Test");
-    let id = account_id.into_inner().account_id;
+    //info!("Test");
+    //debug!("Test");
+    let id:i32 = account_id.to_string().parse().unwrap();
     if id == 1212312121 {
         let account = DataAccount {
-            account_id: 1212312121,
+            account_id: id,
             account_name: "Man".to_string(),
             saving_plans: "Saving Account".to_string(),
             available_balance: 1000000000,
@@ -56,7 +51,7 @@ async fn account_id(account_id: web::Json<Headers>) -> impl Responder{
     } else {
         HttpResponse::NotFound().json(json!({
             "message": "Account not found",
-            "data": "null"
+            "data": null
         }))
     }
     
