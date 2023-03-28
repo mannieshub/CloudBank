@@ -3,6 +3,11 @@ use actix_web::{get,web,Responder,HttpResponse};
 use serde_json::json;
 use crate::models::bank::{AccountDetail,DataAccount,Transaction};
 //use serde::{Serialize, Deserialize};
+//use mysql::*;
+//use mysql::prelude::*;
+use crate::HttpServer;
+use crate::App;
+//use std::collections::HashMap;
 
 
 #[get("/account/{id}")]
@@ -11,6 +16,7 @@ async fn account_id(account_id: web::Path<i32>) -> impl Responder{
     //info!("Test");
     //debug!("Test");
     let id:i32 = account_id.to_string().parse().unwrap();
+    
     if id == 1212312121 {
         let account = DataAccount {
             account_id: id,
@@ -18,6 +24,13 @@ async fn account_id(account_id: web::Path<i32>) -> impl Responder{
             saving_plans: "Saving Account".to_string(),
             available_balance: 1000000000,
             transaction_history: vec![
+                Transaction {
+                    time: "2023-03-16T15:00:00Z".to_string(),
+                    transaction: "Transfer".to_string(),
+                    transaction_id: 3,
+                    to_id: "10101010".to_string(),
+                    amount: 50000000,
+                },
                 Transaction {
                     time: "2023-03-16T15:00:00Z".to_string(),
                     transaction: "Transfer".to_string(),
@@ -47,17 +60,45 @@ async fn account_id(account_id: web::Path<i32>) -> impl Responder{
             message: "Account Detail".to_string(),
             data: vec![account],
         };
-        HttpResponse::Ok().json(account_detail)
+        
+        
+        HttpResponse::Ok()
+        .header("Access-Control-Allow-Origin", "*")
+        .header("Access-Control-Allow-Headers", "Content-Type")
+        .header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        .json(account_detail)
+        
     } else {
-        HttpResponse::NotFound().json(json!({
+        HttpResponse::NotFound()
+        .header("Access-Control-Allow-Origin", "*")
+        .header("Access-Control-Allow-Headers", "Content-Type")
+        .header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        .json(json!({
             "message": "Account not found",
             "data": null
         }))
+
     }
     
 
     
 }
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    // ค่าโฮสต์และพอร์ท
+    let addr = "127.0.0.1:8080";
+
+    // เปิดเซิร์ฟเวอร์
+    let server = HttpServer::new(|| {
+        App::new()
+            .service(account_id)
+    })
+    .bind(addr)?;
+
+    server.run().await
+}
+
 
 //ให้ user พิม id เพื่อเช็คละแสดงข้อมูลที่มี id ตรงกัน
 //ในกรณีที่เชื่อม db ก็เอา id ไปเช็คใน db ละแสดงผล
