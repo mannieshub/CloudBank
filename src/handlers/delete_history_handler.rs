@@ -6,7 +6,7 @@ use crate::HttpServer;
 use crate::App;
 
 
-#[delete("/account/history/{id}")]
+#[delete("/account/{id}/history")]
 async fn delete(account_id: web::Path<i32>)  -> impl  Responder {
     
     let id = account_id.to_string().parse().unwrap();
