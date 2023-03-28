@@ -2,7 +2,7 @@ use actix_web::{App ,HttpServer};
 pub mod routes;
 pub mod handlers;
 mod models;
-use crate::routes::{account_routes,deposit_routes,withdraw_routes,transfer_routes};
+use crate::routes::{account_routes,deposit_routes,withdraw_routes,transfer_routes,delete_history_routes,change_name_routes};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> { //Entry Point หรือจุดที่โปรแกรมเริ่มทำงาน

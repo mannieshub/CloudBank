@@ -90,7 +90,39 @@ pub struct TransferMoney {
 }
 
 #[derive(Serialize,Deserialize)]
+pub struct DataChange {
+    pub message: String,
+    pub account_id: i32,
+    pub account_name: String,
+}
+#[derive(Serialize,Deserialize)]
+pub struct ChangeName {
+    pub message: String,
+    pub data: Vec<DataChange>,
+}
 
-pub struct Change_name {
+
+#[derive(Serialize, Deserialize)]
+pub struct DeleteTransaction {
+    pub time: String,
+    pub transaction: String,
+    pub transaction_id: i32,
+    pub to_id: String,
+    pub amount: i32,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct DataDelete {
+    pub account_id: i32,
+    pub account_name: String,
+    pub saving_plans: String,
+    pub available_balance: i32,
+    pub transaction_history: Vec<DeleteTransaction>,
+}
+
+#[derive(Serialize,Deserialize)]
+pub struct DeleteDetail {
+    pub message: String,
+    pub data: Vec<DataDelete>,
     
 }

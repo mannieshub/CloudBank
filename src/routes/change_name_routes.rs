@@ -1,7 +1,7 @@
 use actix_web::{web};
-use crate::handlers::change_name_handler::{account_id};
+use crate::handlers::change_name_handler::{change_name};
 
 pub fn config(cfg: &mut web::ServiceConfig){
     cfg
-    .service(account_id);
+    .service(change_name);
 }
