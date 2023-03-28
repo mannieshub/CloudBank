@@ -31,9 +31,17 @@ async fn deposit_money(account_id: web::Path<i32>,deposit: web::Json<Headers>) -
             message: "Deposit Success!".to_string(),
             data: vec![deposit],
         };
-        HttpResponse::Ok().json(deposit_money)
+        HttpResponse::Ok()
+        .header("Access-Control-Allow-Origin", "*")
+        .header("Access-Control-Allow-Headers", "Content-Type")
+        .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        .json(deposit_money)
     } else {
-        HttpResponse::NotFound().json(json!({
+        HttpResponse::NotFound()
+        .header("Access-Control-Allow-Origin", "*")
+        .header("Access-Control-Allow-Headers", "Content-Type")
+        .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        .json(json!({
             "message": "The request was invalid",
             "data": null
         }))
