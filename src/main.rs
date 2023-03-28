@@ -12,6 +12,8 @@ async fn main() -> std::io::Result<()> { //Entry Point หรือจุดท�
             .configure(deposit_routes::config)
             .configure(withdraw_routes::config)
             .configure(transfer_routes::config)
+            .configure(delete_history_routes::config)
+            .configure(change_name_routes::config)
    })
    .bind("127.0.0.1:8080")?
    .run()

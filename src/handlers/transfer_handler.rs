@@ -5,7 +5,9 @@ use serde::{Serialize,Deserialize};
 use serde_json::json;
 
 #[derive(Serialize,Deserialize)]
-pub struct Headers {
+
+//ส่วนติดต่อ front-end
+pub struct Headers { 
     pub destination_id: i32,
     pub amount: i32,
 }
@@ -25,6 +27,7 @@ async fn transfer_money(account_id:web::Path<i32>,transfer:web::Json<Headers>) -
             "data": null
         }));
     }
+            //ส่วนติดต่อ database//
 
     if id == 1212312121 {
         
@@ -43,9 +46,10 @@ async fn transfer_money(account_id:web::Path<i32>,transfer:web::Json<Headers>) -
             data: vec![transfer],
          };
          HttpResponse::Ok().json(transfer_money)
-        } else {
+    } 
+    else {
             HttpResponse::NotFound().json(json!({
-                "message": "The request was invalid",
+                "message": "User not found!",
                 "data": null
             }))
     }
