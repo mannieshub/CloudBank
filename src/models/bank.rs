@@ -92,5 +92,5 @@ pub struct TransferMoney {
 #[derive(Serialize,Deserialize)]
 
 pub struct Change_name {
-    pub 
+    
 }
