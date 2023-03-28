@@ -88,3 +88,9 @@ pub struct TransferMoney {
     pub data: Vec<DataTransfer>,
     
 }
+
+#[derive(Serialize,Deserialize)]
+
+pub struct Change_name {
+    pub 
+}
