@@ -1,6 +1,6 @@
 use crate::models::bank::{DeleteTransaction,DataDelete,DeleteDetail}; //bank.rs
 use actix_web::{delete,web,HttpResponse,Responder};
-use serde::{Serialize,Deserialize};
+//use serde::{Serialize,Deserialize};
 use serde_json::json;
 use crate::HttpServer;
 use crate::App;
@@ -56,16 +56,12 @@ async fn delete(account_id: web::Path<i32>)  -> impl  Responder {
         
         
         HttpResponse::Ok()
-        .header("Access-Control-Allow-Origin", "*")
-        .header("Access-Control-Allow-Headers", "Content-Type")
-        .header("Access-Control-Allow-Methods", "DELETE, OPTIONS")
+        
         .json(account_detail)
         
     } else {
         HttpResponse::NotFound()
-        .header("Access-Control-Allow-Origin", "*")
-        .header("Access-Control-Allow-Headers", "Content-Type")
-        .header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        
         .json(json!({
             "message": "Account not found",
             "data": null

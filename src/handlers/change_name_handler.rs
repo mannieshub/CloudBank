@@ -28,15 +28,11 @@ async fn change_name(
             data: vec![y],
         };
         HttpResponse::Ok()
-            .header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Headers", "Content-Type")
-            .header("Access-Control-Allow-Methods", "PUT, OPTIONS")
+           
             .json(change_name)
     } else {
         HttpResponse::NotFound()
-            .header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Headers", "Content-Type")
-            .header("Access-Control-Allow-Methods", "PUT, OPTIONS")
+            
             .json(json!({
                 "message": "User not found!",
                 "data": null
