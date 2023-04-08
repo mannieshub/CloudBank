@@ -3,8 +3,8 @@ use actix_web::{post,web,HttpResponse,Responder};
 
 use serde::{Serialize,Deserialize};
 use serde_json::json;
-use crate::HttpServer;
-use crate::App;
+//use crate::HttpServer;
+//use crate::App;
 #[derive(Serialize,Deserialize)]
 
 //ส่วนติดต่อ front-end
@@ -47,16 +47,12 @@ async fn transfer_money(account_id:web::Path<i32>,transfer:web::Json<Headers>) -
             data: vec![transfer],
          };
          HttpResponse::Ok()
-         .header("Access-Control-Allow-Origin", "*")
-         .header("Access-Control-Allow-Headers", "Content-Type")
-         .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+         
          .json(transfer_money)
     } 
     else {
             HttpResponse::NotFound()
-            .header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Headers", "Content-Type")
-            .header("Access-Control-Allow-Methods", "POST, OPTIONS")
+            
             .json(json!({
                 "message": "User not found!",
                 "data": null

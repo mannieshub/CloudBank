@@ -3,7 +3,10 @@ use actix_web::{post, web, HttpResponse, Responder};
 //use log::{debug, info};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use chrono::{DateTime, Utc};
+
 #[derive(Serialize, Deserialize)]
+
 struct Headers {
     amount: i32,
 }
@@ -11,6 +14,9 @@ struct Headers {
 #[post("/withdraw/{id}")]
 async fn withdraw_money(account_id: web::Path<i32>,withdraw: web::Json<Headers>) -> impl Responder{
    // HttpResponse::Ok().json("Withdraw Service")
+    let now: DateTime<Utc> = Utc::now();
+    let formatted = now.format("%Y-%m-%dT%H:%M:%SZ").to_string();
+
    let inner = withdraw.into_inner();
     let id = account_id.to_string().parse().unwrap();
     let amt = inner.amount;
@@ -26,7 +32,7 @@ async fn withdraw_money(account_id: web::Path<i32>,withdraw: web::Json<Headers>)
             account_id: id,
             account_name: "Man".to_string(),
             available_balance: 1000000000 - amt,
-            time: "2023-03-16T15:00:00Z".to_string(),
+            time: formatted,
         };
 
         let withdraw_money = WithdrawMoney {

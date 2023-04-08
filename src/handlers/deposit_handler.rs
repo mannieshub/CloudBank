@@ -1,15 +1,23 @@
-use crate::models::bank::{DepositMoney, DataDeposit};
+use crate::models::bank::{DataDeposit, DepositMoney};
 use actix_web::{post, web, HttpResponse, Responder};
-//use log::{debug, info};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+//use actix_cors::Cors;
+use chrono::{DateTime, Utc};
+
+//use http::header;
 #[derive(Serialize, Deserialize)]
+
 struct Headers {
     amount: i32,
 }
 #[post("/deposit/{id}")]
-async fn deposit_money(account_id: web::Path<i32>,deposit: web::Json<Headers>) -> impl Responder {
+async fn deposit_money(account_id: web::Path<i32>, deposit: web::Json<Headers>) -> impl Responder {
     //HttpResponse::Ok().json("Deposit Service")
+
+    let now: DateTime<Utc> = Utc::now();
+    let formatted = now.format("%Y-%m-%dT%H:%M:%SZ").to_string();
+
     let inner = deposit.into_inner();
     let id = account_id.to_string().parse().unwrap();
     let amt = inner.amount;
@@ -24,24 +32,16 @@ async fn deposit_money(account_id: web::Path<i32>,deposit: web::Json<Headers>) -
             account_id: id,
             account_name: "Man".to_string(),
             available_balance: amt + 1000000000,
-            time: "2023-03-16T15:00:00Z".to_string(),
+            time: formatted,
         };
 
         let deposit_money = DepositMoney {
             message: "Deposit Success!".to_string(),
             data: vec![deposit],
         };
-        HttpResponse::Ok()
-        .header("Access-Control-Allow-Origin", "*")
-        .header("Access-Control-Allow-Headers", "Content-Type")
-        .header("Access-Control-Allow-Methods", "POST, OPTIONS")
-        .json(deposit_money)
+        HttpResponse::Ok().json(deposit_money)
     } else {
-        HttpResponse::NotFound()
-        .header("Access-Control-Allow-Origin", "*")
-        .header("Access-Control-Allow-Headers", "Content-Type")
-        .header("Access-Control-Allow-Methods", "POST, OPTIONS")
-        .json(json!({
+        HttpResponse::NotFound().json(json!({
             "message": "The request was invalid",
             "data": null
         }))
