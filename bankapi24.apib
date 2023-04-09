@@ -1,0 +1,411 @@
+FORMAT: 1A
+HOST: https://polls.apiblueprint.org/
+
+# BankAPI
+
+This is just some service of Bank
+
+##Login System [/login]
+###Login[POST]
+
++ Request
+    
+    + Headers
+    
+            account_id: "1212312121"
+            password: "mymannate"
+            
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+            
+                "message":"Login Success!"
+                
+            }
+            
++ Response 401 (application/json)
+
+    + Body
+            
+            {
+            
+                "message":"username or password incorrect recheck and try again!"
+                
+            }
+
+##Register System [/register]
+
+###Register[POST]
+
++ Request
+
+    + Headers
+            
+            username: "Mr.Pongpisut Prasri"
+            password: "man123456"
+            savingplan: "saving account"
+            amount: "500.00"
+
++ Response 201 (application/json)
+
+    + Body
+        
+            {
+            
+                "message":"Register was  Success!"
+                
+            }
+    
++ Response 500 (application/json)
+
+    + Body
+        
+            {
+                "message":"500 Internal Server Error while processing register request"
+            }
+
+##Account [/account]
+
+###Account Detail[GET]
++ Request (application/json)
+        
++ Response 200 (application/json)
+
+    + Headers
+    
+            Location: /account/1212312121
+            
+    + Body
+    
+            {
+            
+                "message":"Account Detail",
+                "data":[
+                    {
+                        "account_id":"1212312121",
+                        "account_name":"Man",
+                        "saving_plans":"Saving Account",
+                        "available_balance":"10,000,000,000",
+                        "transaction_history": [
+                        
+                                {
+                                    "time":"2023-03-16T15:00:00Z",
+                                    "transaction":"Transfer",
+                                    "transaction_id":"3",
+                                    "to_id":"10101010",
+                                    "amount":"500,000"
+                                },
+                                {
+                                    "time":"2023-03-16T12:00:00Z",
+                                    "transaction":"Deposit",
+                                    "transaction_id":"2",
+                                    "to_id":"-",
+                                    "amount":"1,000,000"
+                                },
+                                {
+                                    "time":"2023-03-15T13:00:00Z",
+                                    "transaction":"Withdraw",
+                                    "transaction_id":"1",
+                                    "to_id":"-",
+                                    "amount":"20,000"
+                                }
+                        ]
+                    }
+                ]
+            }
++ Response 400 (application/json)
+
+    + Body
+        
+            {
+                "message":"400 The request was invalid."
+            }
+            
++ Response 401 (application/json)
+
+    + Body
+        
+            {
+                "message":"401 Requires user authentication."
+            }
+
++ Response 404 (application/json)
+
+    + Body
+        
+            {
+                "message":"404 User not found"
+            
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message":"500 Internal server error"
+            }
+        
+
+##Deposit Service [/deposit]
+
+### Deposit money[POST]
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "amount": 100.00
+            }
+
++ Response 201 (application/json)
+    + Headers
+    
+            Location: /deposit/1212312121
+        
+    + Body
+        
+            {
+                "message":"Deposit Success!"
+                "data":[
+                            {
+                                "account_id": "1212312121",
+                                "account_name": "Man",
+                                "available_balance": "110.00",
+                                "time": "{time}"
+                            }
+                        ]
+            }
++ Response 400 (application/json)
+
+    + Body
+            
+            {
+             
+                "message":"400 The request was invalid."
+            }
+            
++ Response 401 (application/json)
+
+    + Body
+    
+            {
+                "message":"401 Requires user authentication."
+            }
+            
++ Response 404 (application/json)
+
+    + Body
+        
+            {
+                "message":"404 User not found."
+            }
+            
++ Response 500(application/json)
+
+    + Body
+    
+            {
+                "message":"500 Internal server error."
+            }
+        
+##Withdraw Service [/withdraw]
+
+###Withdraw money[POST]
++ Request (application/json)
+
+    + Body
+    
+            {
+                "amount": "100.00"
+            }
+
++ Response 201 (application/json)
+    + Headers
+    
+            Location: /withdraw/1212312121
+        
+    + Body
+    
+            {
+                "message":"Withdraw Success!",
+                "data":[
+        
+                        {
+                            "message":"Withdraw 100.00 THB success!",
+                            "account_id": "1212312121",
+                            "account_name": "Man",
+                            "available_balance": "10.00",
+                            "time": "{time}"
+                        }
+                      ]
+            }
+                  
++ Response 400 (application/json)
+
+    + Body
+            
+            {
+             
+                "message":"400 The request was invalid."
+            }
+            
++ Response 401 (application/json)
+
+    + Body
+    
+            {
+                "message":"401 Requires user authentication."
+            }
+            
++ Response 404 (application/json)
+
+    + Body
+        
+            {
+                "message":"404 User not found."
+            }
+            
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message":"500 Internal server error while processing the withdraw request."
+            }
+        
+##Transfer Service [/transaction/{account_id}]
+
+###Transfer money[POST]
++ Request (application/json)
+
+    + Body
+        
+            {
+                "to_id":"10101010",
+                "amount": 100.00
+            }
+
++ Response 201 (application/json)
+    + Headers
+    
+            Location: /transaction/1212312121
+        
+    + Body
+    
+            {
+                "message":"Transfer Success!",
+                "data":[
+                        {
+                            "message":"Transaction success!",
+                            "account_id": "1212312121",
+                            "account_name": "Man",
+                            "to_id":"10101010",
+                            "to_name":"Note",
+                            "available_balance": "10.00 THB",
+                            "time": "{time}"
+                        }
+                      ]
+            }
+            
++ Response 401 (application/json)
+
+    + Body
+    
+            {
+                "message":"401 Requires user authentication."
+            }
+            
++ Response 404 (application/json)
+
+    + Body
+        
+            {
+                "message":"404 User not found."
+            }
+            
++ Response 500 (application/json)
+
+    + Body
+    
+            {
+                "message":"500 Internal server error while processing the transfer request."
+            }
+
+
+##Edit Account Name [/changename/{account_id}]
+
+### Edit Name[PUT]
++ Request (application/json)
+
+    + Body
+        
+            {
+                "new_name":"ManV2"
+            }
+            
++ Response 200 (application/json)
+
+    + Headers
+            
+                Location: /changename/1212312121
+    
+    + Body  
+    
+            {
+            
+                "message":"Edit account_name from Man to ManV2",
+                "data":[
+                
+                        {
+                            "message":"Edit Success!",
+                            "account_id":"1212312121",
+                            "account_name":"ManV2"
+                        }
+                
+                
+                
+                
+                ]
+            }
+                
+##History Delete [/account/{account_id}/history]
+
+###History Delete[DELETE]
+
++ Request (application/json)
+        
++ Response 200 (application/json)
+
+    + Headers
+            
+                Location:/account/1212312121/history
+    
+    + Body
+            
+            {
+                "message":"Delete Success!",
+                "data":[
+                        {
+                            "account_id":"1212312121",
+                            "account_name":"Man",
+                            "saving_plans":"Saving Account",
+                            "available_balance":"10,000,000,000",
+                            "transaction_history": [
+                            
+                            ]
+                        }
+                    ]
+        
+            }
+
+                        
+
+        
+
+
+
+
+            
