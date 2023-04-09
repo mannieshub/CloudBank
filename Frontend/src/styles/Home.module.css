@@ -1,0 +1,90 @@
+.main{
+  background-color: #2A3B42;
+  color: #45C2B2;
+  text-align: center;
+  height: 70px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 0px 50px;
+  font-weight:bold;
+  margin-bottom:50px;
+}
+.btn{
+  padding: 5px 20px;
+  border-radius: 10px;
+  margin: 0px 30px;
+  
+  
+}
+.top{
+  display: flex;
+  column-gap: 10px;
+  
+}
+.card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.nsavsignout{
+  padding-right: 10px;
+}
+.footer{
+  margin-top: 80px;
+  background-color: rgb(208, 241, 212);
+  display: flex;
+  height: 250px;
+  justify-content: space-between;
+}
+
+.menu{
+  background-color: #2A3B42;
+  color: #45C2B2;
+  text-align: center;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 50px;
+  font-weight:bold;
+  margin-bottom:200px;
+}
+
+.btnmenu{
+  justify-content: space-between;
+  display: flex; 
+}
+
+.btnmenuleft{
+  padding: 20px 100px;
+  font-size: 20px;
+  border-radius: 0px 20px 20px 0px;
+  background-color: rgb(105, 211, 102);
+
+}
+
+.btnmenuright{
+  padding: 20px 100px;
+  font-size: 20px;
+  border-radius: 20px 0px 0px 20px;
+  background-color: rgb(105, 211, 102);
+  
+}
+
+.textmenu{
+  
+padding: 100px 100px;
+font-style: normal;
+font-weight: 500;
+font-size: 60px;
+
+text-align: center;
+}
+
+.cardhistory{
+  background-color: rgb(9, 100, 70);
+  color: whitesmoke;
+  
+}

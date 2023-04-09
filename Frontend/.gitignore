@@ -1,19 +1,19 @@
-/Webbank-Webserver/target
-.vscode
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # dependencies
-/Frontend/node_modules
-/Frontend/.pnp
+/node_modules
+/.pnp
 .pnp.js
 
 # testing
-/Frontend/coverage
+/coverage
 
 # next.js
-/Frontend/.next/
-/Frontend/out/
+/.next/
+/out/
 
 # production
-/Frontend/build
+/build
 
 # misc
 .DS_Store
